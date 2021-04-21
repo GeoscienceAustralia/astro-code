@@ -160,6 +160,7 @@ void doSunJob(struct siteType *pWhere, struct dateType *pWhen)
 				if (itwi!=TRANSITPREDCTN) {
                     fprintf(stdout, "\"date\": \"%02d/%02d/%4d\",", pWhen->day, pWhen->month, pWhen->year);
                     fprintf(stdout, "\"rise\": \"%s\",", cRise);
+                    fprintf(stdout, "\"rise_day\": \"%s\",", decimalDayToRelativeLabel(sun_rise[start_month][start_day]));
 
 					if (sun_set[start_month][start_day]!=0.0) {
 						decday2time(sun_set[start_month][start_day], cSet);
@@ -168,20 +169,20 @@ void doSunJob(struct siteType *pWhere, struct dateType *pWhen)
 						if (summer) strcpy(cSet, "  + ");
 						else			strcpy(cSet, "  - ");
 					}
-                    fprintf(stdout, "\"set\": \"%s\"", cSet);
+                    fprintf(stdout, "\"set\": \"%s\",", cSet);
+                    fprintf(stdout, "\"set_day\": \"%s\"", decimalDayToRelativeLabel(sun_set[start_month][start_day]));
 				} else {
                     fprintf(stdout, "\"transit_time\": \"%02d/%02d/%4d\",", pWhen->day, pWhen->month, pWhen->year);
                     fprintf(stdout, "\"rise\": \"%s\"", cRise);
 				}
 				if (sunUpOrDownAllDay) {
                     if (itwi!=TRANSITPREDCTN) {
-                        fprintf(stdout, "\"sun_position\": \"%s\",",  "Sun above the horizon all day");
+                        fprintf(stdout, ",\"sun_position\": \"%s\"",  "Sun above the horizon all day");
                     } else {
-                        fprintf(stdout, "\"sun_position\": \"%s\",",  "Sun below the horizon all day");
+                        fprintf(stdout, ",\"sun_position\": \"%s\"",  "Sun below the horizon all day");
                     }
                     sunUpOrDownAllDay = false;
 				}
-
 			} else {				/* a whole year		*/
 				printYearSun(stdout, sun_rise, sun_set, mday, itwi,
 				 pWhere->latitude);

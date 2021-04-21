@@ -75,10 +75,13 @@ void printYearSun(FILE *ofp, double sun_rise[NUMBER_OF_MONTHS+1][34],
                 fprintf(stdout, "\"month\": \"%d\",", imon);
                 fprintf(stdout, "\"day\": \"%d\",", iday);
                 fprintf(stdout, "\"rise\": \"%s\",", cRise);
+                fprintf(stdout, "\"rise_day\": \"%s\",", decimalDayToRelativeLabel(sun_rise[imon][imon]));
                 if (itwi!=TRANSITPREDCTN) {
-                    fprintf(stdout, "\"set\": \"%s\"", cSet);
+                    fprintf(stdout, "\"set\": \"%s\",", cSet);
+                    fprintf(stdout, "\"set_day\": \"%s\"", decimalDayToRelativeLabel(sun_set[imon][imon]));
                 } else {
-                    fprintf(stdout, "\"set\": \"\"");
+                    fprintf(stdout, "\"set\": \"\",");
+                    fprintf(stdout, "\"set_day\": \"\"");
                 }
                 fprintf(stdout, "}");
             }
@@ -96,6 +99,4 @@ void printYearSun(FILE *ofp, double sun_rise[NUMBER_OF_MONTHS+1][34],
 
         sunUpOrDownAllDay = false;
     }
-
-	return;
 }

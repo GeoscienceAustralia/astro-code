@@ -138,7 +138,8 @@ void 		computeRiseSet(
 			double	sun_rise[NUMBER_OF_MONTHS+1][34],	/* fraction of a day	*/
 			double	sun_set[NUMBER_OF_MONTHS+1][34]);	/* fraction of a day	*/
 int		daysInFebruary(int iyear);
-void		decday2time(double decDay, char *timeOday);
+void	decday2time(double decDay, char *timeOday);
+char	*decimalDayToRelativeLabel(double decimalDay);
 int		dequote(char *str);
 double	dMod(double numerator, double denominator);
 double	dmy2jday(int day, int month, int year);
