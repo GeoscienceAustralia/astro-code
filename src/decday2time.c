@@ -39,29 +39,53 @@ History:
 #include "..\\commonfnctns\\astro.h"
 #endif
 
-/* The variable timeOday is expected to be defined in the calling module as
-	char timeOday[5], allowing space for the terminating NUL character.	*/
-void decday2time(double decDay, char *timeOday)
-{
-	double	hours, minutes;
-	int		ihours, iminutes;
+/**
+ * The variable timeOday is expected to be defined in the calling module as
+ * char timeOday[5], allowing space for the terminating NUL character.
+ *
+ * @param decDay
+ * @param timeOday
+ */
+void decday2time(double decDay, char *timeOday) {
+	double hours, minutes;
+	int ihours, iminutes;
 	/* extern FILE *debugDest;	*/
 
 	/* extern bool	debug;
 	if (debug) (void)fprintf(debugDest, "Entering fnctn decday2time()...\n");
 	if (debug) (void)fprintf(debugDest, "Input value was %11.9lf\n", decDay);	*/
 
-	if (decDay<0.0) decDay = 0.0;
-	if (decDay>1.0) decDay = 1.0;
+	if (decDay < 0.0) {
+		decDay = 1.0 + decDay;
+	}
+	if (decDay > 1.0) {
+		decDay = decDay - 1.0;
+	}
 
 	/* Offset of 0.00833333333 (half a minute) prevents answers like 0560:	*/
-	hours = decDay*24.0 + 0.00833333333;
-	ihours = (int)hours;
-	minutes = (hours-(double)ihours)*60.0;
-	iminutes = (int)minutes;
+	hours = decDay * 24.0 + 0.00833333333;
+	ihours = (int) hours;
+	minutes = (hours - (double) ihours) * 60.0;
+	iminutes = (int) minutes;
 
-	(void)sprintf(timeOday, "%02d", ihours);
+	(void) sprintf(timeOday, "%02d", ihours);
 	/* The following statement rounds its answer to the nearest minute	*/
-	(void)sprintf(timeOday+2, "%02d", iminutes);
-	return;
+	(void) sprintf(timeOday + 2, "%02d", iminutes);
+}
+
+/**
+ * Determine whether a decimal day is on the next, previous (or same) day.
+ *
+ * @param decimalDay 0.0 to 1.0 covers 24 hours, values less than 0.0 are
+ * in the previous day, values greater than 1.0 are in the next day
+ * @return label for which day is represented by the decimal day
+ */
+char *decimalDayToRelativeLabel(double decimalDay) {
+	if (decimalDay > 1.0) {
+		return "NEXT";
+	} else if (decimalDay < 0.0) {
+		return "PREVIOUS";
+	} else {
+		return "SAME";
+	}
 }
