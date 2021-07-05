@@ -267,12 +267,19 @@ int main(int argc, char * argv[]) {
                 ldeg = la;
                 lodeg = lo;
                 lomin = ((lo - lodeg) * 60) + .05;
-                /**************Mihajlo 26/11/2000**********************************************************************/
 
-//                printf("<tr><td><a href=\"#loc\" onClick=\"CheckedAustralia();document.Sunrise.Location.value='%s';document.Sunrise.LatDeg.value=%3d;document.Sunrise.LatMin.value=%3d; document.Sunrise.LongDeg.value=%d;document.Sunrise.LongMin.value=%d;ShowMiki('%s');\">%s</a></td><td><a href=\"/map/names/custodians.jsp\"> %s </a></td><td>%s</td><td>", & ans[12], ldeg, lmin, lodeg, lomin, state, & ans[12], state, ccode);
-//                printf("%d�  %d'</td><td>", ldeg, lmin);
-//                printf("%d�  %d'</td></tr>\n", lodeg, lomin);
-                /********************************************************************************************************/
+                // Round 60 minutes into degrees (latitude)
+                if (lmin == 60) {
+                    lmin = 0;
+                    ldeg -= 1;
+                }
+
+                // Round 60 minutes into degrees (longitude)
+                if (lomin == 60) {
+                    lomin = 0;
+                    lodeg += 1;
+                }
+
                 if (firstRun) {
                     firstRun = false;
                 } else {
